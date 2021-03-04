@@ -1,7 +1,10 @@
 from CustomLogger import CustomLogger
 from pandas import DataFrame
+from typing import Union
+from numpy import uint8, uint16, uint32, uint64
 
 logger = CustomLogger(filename=__name__)
+any_uint = Union[uint8, uint16, uint32, uint64]
 
 
 class ProcessedProteinDataHandler:
@@ -31,7 +34,14 @@ class ProcessedProteinDataHandler:
     def sequences(self):
         return self.__sequences
 
-    def save_proceed_data(self, path):
+    def normalize_via_length(self):
+        sequences = self.__sequences
+        for index in range(sequences.shape[0]):
+            sequence = sequences[index]
+            sequence /= sequence.sum()
+            sequences[index] = sequence.round(decimals=2)
+
+    def save_processed_data(self, path):
         dataframe = self.__to_dataframe()
         dataframe.to_csv(path)
 

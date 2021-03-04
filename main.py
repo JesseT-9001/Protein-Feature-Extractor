@@ -2,6 +2,7 @@ from CustomLogger import CustomLogger
 from Handlers.ProteinDataHandler import ProteinDataHandler
 from Handlers.ProteinAttributeDataHandler import ProteinAttributeDataHandler
 from os import path
+from numpy import uint8
 
 logger = CustomLogger(filename=__name__)
 
@@ -25,8 +26,9 @@ def main():
     pp_data = p_data.covert_sequences_to_count_vector(
         attributes_values=attributes_values)
 
+    pp_data.normalize_via_length()
 
-    pp_data.save_proceed_data(path=path.join(features_folder, "sequence_appearance.csv"))
+    pp_data.save_processed_data(path=path.join(features_folder, "sequence_appearance.csv"))
 
 
 if __name__ == '__main__':
