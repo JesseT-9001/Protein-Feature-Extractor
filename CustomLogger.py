@@ -4,7 +4,7 @@ from logging import CRITICAL, DEBUG, ERROR, FileHandler, Formatter, getLogger, \
 
 class CustomLogger:
     def __init__(self, filename):
-        self.__level = 3
+        self.__level = 4
         self.__logger = getLogger(filename)
 
         # Creates a files handler for log recording

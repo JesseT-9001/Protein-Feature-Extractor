@@ -1,7 +1,6 @@
 from CustomLogger import CustomLogger
 from Handlers.DataHandler import DataHandler
 from Handlers.ProcessedProteinDataHandler import ProcessedProteinDataHandler
-from numpy import array, ndarray, ndenumerate, zeros
 
 logger = CustomLogger(filename=__name__)
 
@@ -18,41 +17,23 @@ def count_sequence(sequence):
 
 
 class ProteinDataHandler(DataHandler):
-    def covert_sequences_to_count_vector(self, attributes_values: ndarray):
-        sequence_vector = zeros([self.file.shape[0], attributes_values.size])
-        groups = []
-        folds = []
-        names = []
-        sequences = []
+    def covert_sequences_to_count_vector(self, attributes_values):
+        processed_file = self.file.drop(columns='Sequence')
+        processed_file["Length"] = 0.0
+        processed_file[attributes_values] = 0.0
+
+        location = processed_file.loc
+        attributes_values_list = attributes_values.tolist()
         for index, data_dict in self.file.iterrows():
             sequence = data_dict['Sequence']
             sequence_counted_dict = count_sequence(sequence=sequence)
-            for index_, character in ndenumerate(attributes_values):
+            for character in attributes_values_list:
                 if character not in sequence_counted_dict:
                     continue
-                sequence_vector[index, index_[0]] = sequence_counted_dict[character]
 
+                location[index, character] = sequence_counted_dict[character]
+            location[index, "Length"] = location[index, "A":].sum()
 
-            for key, value in data_dict.items():
-                if key == 'Group':
-                    groups.append(value)
-                elif key == 'Fold':
-                    folds.append(value)
-                elif key == 'Name':
-                    names.append(value)
-                elif key == 'Sequence':
-                    sequences.append(sequence_vector[index])
+        return ProcessedProteinDataHandler(file=processed_file)
 
-        groups = array(groups)
-        folds = array(folds)
-        names = array(names)
-        sequences = array(sequences)
-        ppd_handler = ProcessedProteinDataHandler(
-            groups=groups,
-            folds=folds,
-            names=names,
-            sequences=sequences,
-            attributes=attributes_values)
-
-        return ppd_handler
 

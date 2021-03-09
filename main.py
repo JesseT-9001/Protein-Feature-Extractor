@@ -2,7 +2,7 @@ from CustomLogger import CustomLogger
 from Handlers.ProteinDataHandler import ProteinDataHandler
 from Handlers.ProteinAttributeDataHandler import ProteinAttributeDataHandler
 from os import path
-from numpy import uint8
+from numpy import uint8, array
 
 logger = CustomLogger(filename=__name__)
 
@@ -20,15 +20,17 @@ def main():
     filename = path.join(data_folder, protein_attributes)
     p_attributes = ProteinAttributeDataHandler(filename=filename)
 
-    logger.info(item="called")
-
-    attributes_values = p_attributes.get_all_header()
+    attributes_values = p_attributes.get_attribute_headers()
     pp_data = p_data.covert_sequences_to_count_vector(
         attributes_values=attributes_values)
 
     pp_data.normalize_via_length()
 
-    pp_data.save_processed_data(path=path.join(features_folder, "sequence_appearance.csv"))
+    for i in range(1, 56):
+        attribute_name, attribute = p_attributes.get_attribute_values(i)
+        pp_data.apply_attribute(attribute_name=attribute_name, attribute=attribute)
+
+    pp_data.save_processed_data(path=path.join(features_folder, "features_extracted.csv"))
 
 
 if __name__ == '__main__':
