@@ -8,6 +8,7 @@ class DataHandler:
     __slots__ = ["__file"]
 
     def __init__(self, filename):
+        logger.flow(message="Created a data handler.")
         self.__file = read_csv(filename)
 
     @property

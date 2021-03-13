@@ -2,9 +2,10 @@ from CustomLogger import CustomLogger
 from Handlers.ProteinDataHandler import ProteinDataHandler
 from Handlers.ProteinAttributeDataHandler import ProteinAttributeDataHandler
 from os import path
-from numpy import uint8, array
 
-logger = CustomLogger(filename=__name__)
+import CustomLogger as CustomLogger
+
+logger = CustomLogger.CustomLogger(filename=__name__)
 
 data_folder = "data"
 protein_data = "g_data.csv"
@@ -13,7 +14,7 @@ features_folder = "features"
 
 
 def main():
-    logger.info(item="Started Main")
+    logger.flow(message="Started Main.")
 
     p_data = ProteinDataHandler(filename=path.join(data_folder, protein_data))
 

@@ -1,6 +1,6 @@
 from CustomLogger import CustomLogger
 from Handlers.DataHandler import DataHandler
-from Handlers.ProcessedProteinDataHandler import ProcessedProteinDataHandler
+from Handlers.Processor import Processor
 
 logger = CustomLogger(filename=__name__)
 
@@ -34,6 +34,6 @@ class ProteinDataHandler(DataHandler):
                 location[index, character] = sequence_counted_dict[character]
             location[index, "Length"] = location[index, "A":].sum()
 
-        return ProcessedProteinDataHandler(file=processed_file)
+        return Processor(file=processed_file)
 
 
