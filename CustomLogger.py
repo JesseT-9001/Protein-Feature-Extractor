@@ -6,7 +6,15 @@ Custom Logger Class
 
 import logging
 import numpy as np
-import os.path as path
+
+# Sets root logging configuration.
+logging.basicConfig(
+    encoding='utf-8',
+    filemode='w',
+    filename='my_logs.log',
+    format='%(asctime)s : %(levelname)s : %(name)s : %(message)s',
+    level=logging.DEBUG,
+)
 
 
 class CustomLogger:
@@ -15,9 +23,8 @@ class CustomLogger:
     module that called me. I also keep a universal log of all logged
     information.
 
-    :param str filename: the name of the module or file used for this logger.
-
-    :cvar numpy.uint8 level: Class variable - Used to set the of logging to use.
+    :param str filename: The name of the module or file used for this logger.
+    :param numpy.uint8 level: The level of logging wanted
 
     * 0: NOTSET - Doesn't log anything.
     * 1: CRITICAL - logs only critical log calls.
@@ -25,81 +32,45 @@ class CustomLogger:
     * 3: INFO - logs info log calls and everything before it.
     * 4: DEBUG - logs debug log calls and everything before it.
 
-    :ivar logging.Logger __logger: Instance variable - Local logger `object`.
-    :ivar logging.Logger __universal_logger: Instance variable - Universal
-        logger `object`.
+    :ivar numpy.uint8 level: Used to set the of logging to use.
+    :ivar logging.Logger logger: Local logger `object`.
 
     :return: Nothing
     :rtype: NoneType
     """
 
-    # Logger level 0: NOTSET, 1: CRITICAL, 2: ERROR, 3: INFO, 4: DEBUG.
-    level: np.uint8 = np.uint8(4)
-
     #: Reserve space for writable attributes and limits addition attribute
     #: creation.
-    __slots__ = ["__logger", "__universal_logger"]
+    __slots__ = ["__level", "__logger"]
 
-    def __init__(self, filename: str) -> None:
+    def __init__(self, filename: str, level: np.uint8 = np.uint8(4)) -> None:
         """Constructor Method."""
 
-        # Logger creation based on desired file name.
+        # Sets local logger level
+        self.__level = level
+
+        # Sets local logger
         self.__logger = logging.getLogger(filename)
 
-        # Universal logger creation.
-        self.__universal_logger = logging.getLogger("Universal")
+    @property
+    def level(self) -> np.uint8:
+        """
+        I'm used to access the current logging level.
 
-        # Creates a files handler for local file log recording.
-        filename = path.join('logs', filename + '.log')
-        file_handler = logging.FileHandler(filename=filename, mode='w')
-
-        # Creates a files handler for universal log recording.
-        kargs = {"filename": path.join('logs', 'Universal.log'), "mode": 'w'}
-        universal_file_handler = logging.FileHandler(**kargs)
-
-        # Formatting: Time:Level:Filename:Message
-        formatting = '%(asctime)s : %(levelname)s : %(name)s : %(message)s'
-
-        # Assigns formatting standards to formatter.
-        formatter = logging.Formatter(formatting)
-
-        # Sets the local file handler format to specified format.
-        file_handler.setFormatter(formatter)
-
-        # Sets the universal file handler format to specified format.
-        universal_file_handler.setFormatter(formatter)
-
-        # Adds local file handler to local logger.
-        self.__logger.addHandler(file_handler)
-
-        # Adds universal file handler to universal logger.
-        self.__universal_logger.addHandler(universal_file_handler)
-
-        # Sets log level for local logger.
-        self.__logger.setLevel(self.get_log_level())
-
-        # Sets log level for local logger.
-        self.__universal_logger.setLevel(self.get_log_level())
+        :return: Unsigned 8 bit Integer
+        :rtype: numpy.uint8
+        """
+        return self.__level
 
     @property
-    def logger(self) -> object:
+    def logger(self) -> logging.Logger:
         """
-        I'm used to access the local logger object.
+        I'm used to access the logger object.
 
-        :return: Local logger object.
+        :return: Logger object.
         :rtype: object
         """
         return self.__logger
-
-    @property
-    def universal_logger(self) -> object:
-        """
-        I'm used to access the universal logger object.
-
-        :return: Universal logger object
-        :rtype: object
-        """
-        return self.__universal_logger
 
     def flow(self, message: str) -> None:
         """
@@ -110,27 +81,11 @@ class CustomLogger:
         :return: Nothing
         :rtype: NoneType
         """
-        # Sends message to the information section of local logger.
-        self.__logger.info(message)
+        # Check if current logging level passes threshold.
+        if self.__level > 2:
 
-        # Sends message to the information section of universal logger.
-        self.__universal_logger.info(message)
-
-    def get_log_level(self) -> int:
-        """
-        I get the current log level object based on the class variable level.
-
-        :return: Integer
-        :rtype: int
-        """
-        levels = [
-            logging.NOTSET,
-            logging.CRITICAL,
-            logging.ERROR,
-            logging.INFO,
-            logging.DEBUG,
-        ]
-        return levels[self.level.item()]
+            # Sends message to the informational portion of the local logger.
+            self.__logger.info(message)
 
     def sanity_check(self, message: str) -> None:
         """
@@ -142,8 +97,8 @@ class CustomLogger:
         :return: Nothing
         :rtype: NoneType
         """
-        # Sends message to the information section of local logger.
-        self.__logger.debug(message)
+        # Check if current logging level passes threshold.
+        if self.__level > 3:
 
-        # Sends message to the information section of universal logger.
-        self.__universal_logger.debug(message)
+            # Sends message to the informational portion of the local logger.
+            self.__logger.debug(message)

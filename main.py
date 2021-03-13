@@ -3,7 +3,7 @@ from Handlers.ProteinDataHandler import ProteinDataHandler
 from Handlers.ProteinAttributeDataHandler import ProteinAttributeDataHandler
 from os import path
 
-import CustomLogger as CustomLogger
+import CustomLogger
 
 logger = CustomLogger.CustomLogger(filename=__name__)
 

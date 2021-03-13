@@ -14,10 +14,11 @@ Welcome to Protein Feature Extractor's documentation!
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: The Code:
 
    the_code/customlogger
+   the_code/datahandler
 
 
 Indices and tables

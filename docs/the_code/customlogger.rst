@@ -2,18 +2,15 @@
 .. autoclass:: CustomLogger.CustomLogger
 .. autoattribute:: CustomLogger.CustomLogger::__slots__
 
-CustomLogger Properties
-=======================
+Custom Logger Properties
+========================
+.. autodata:: CustomLogger.CustomLogger::level
 .. autodata:: CustomLogger.CustomLogger::logger
-.. autodata:: CustomLogger.CustomLogger::universal_logger
 
-
-
-CustomLogger Methods
-====================
+Custom Logger Methods
+=====================
 .. automethod:: CustomLogger.CustomLogger::__init__
 .. automethod:: CustomLogger.CustomLogger::flow
-.. automethod:: CustomLogger.CustomLogger::get_log_level
 .. automethod:: CustomLogger.CustomLogger::sanity_check
 
 
