@@ -1,15 +1,22 @@
-from CustomLogger import CustomLogger
-from pandas import DataFrame
-from typing import Union
-from numpy import uint8, uint16, uint32, uint64
+"""
+***************
+Processor Class
+***************
+"""
 
+import CustomLogger
 import numpy as np
+import typing
 
-logger = CustomLogger(filename=__name__)
-any_uint = Union[uint8, uint16, uint32, uint64]
+logger = CustomLogger.CustomLogger(filename=__name__)
+any_uint = typing.Union[np.uint8, np.uint16, np.uint32, np.uint64]
 
 
 class Processor:
+    """
+    Args:
+        file (pandas.DataFrame):
+    """
     __slots__ = ["__file"]
 
     def __init__(self, file):
