@@ -19,6 +19,7 @@ Welcome to Protein Feature Extractor's documentation!
 
    the_code/customlogger
    the_code/datahandler
+   the_code/proteindatahandler
 
 
 Indices and tables

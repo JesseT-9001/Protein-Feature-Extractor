@@ -27,7 +27,10 @@ author = 'Jesse Thomas, Alyssa Capeheart, Harica Bhogavalli Naga Lakshmi'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autodoc', 'sphinx.ext.coverage', 'sphinx.ext.napoleon',
+    'sphinx.ext.autodoc',
+    'sphinx.ext.coverage',
+    'sphinx.ext.napoleon',
+    'sphinx.ext.autosectionlabel',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -51,3 +54,7 @@ html_theme = 'press'
 html_static_path = ['_static']
 
 add_module_names = False
+
+
+# Napoleon settings
+napoleon_google_docstring = True
