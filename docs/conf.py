@@ -18,8 +18,10 @@ sys.path.insert(0, os.path.abspath('..'))
 # -- Project information -----------------------------------------------------
 
 project = 'Protein Feature Extractor'
-copyright = '2021, Jesse Thomas, Alyssa Capeheart, Harica Bhogavalli Naga Lakshmi'
-author = 'Jesse Thomas, Alyssa Capeheart, Harica Bhogavalli Naga Lakshmi'
+# copyright = '2021, Jesse Thomas, Alyssa Capeheart, Harica Bhogavalli Naga Lakshmi'
+# author = 'Jesse Thomas, Alyssa Capeheart, Harica Bhogavalli Naga Lakshmi'
+copyright = '2021, Jesse Thomas, Alyssa Capeheart, Harica BNL'
+author = 'Jesse Thomas, Alyssa Capeheart, Harica BNL'
 
 # -- General configuration ---------------------------------------------------
 

@@ -1,9 +1,3 @@
-"""
-*******************
-Custom Logger Class
-*******************
-"""
-
 import logging
 import numpy as np
 
@@ -20,8 +14,7 @@ logging.basicConfig(
 class CustomLogger:
     """
     I am used to log information to specific files associated with the
-    module that called me. I also keep a universal log of all logged
-    information.
+    module that called me.
 
     Args:
         filename (str): The name of the module or file used for this logger.

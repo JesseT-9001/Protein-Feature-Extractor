@@ -1,8 +1,3 @@
-"""
-**************************
-Protein Data Handler Class
-**************************
-"""
 import CustomLogger
 import Handlers.Processor as Processor
 import Handlers.DataHandler as DataHandler
@@ -13,7 +8,7 @@ import numpy as np
 logger = CustomLogger.CustomLogger(filename=__name__)
 
 
-def count_sequence(sequence: str):
+def count_sequence(sequence: str) -> dict:
     """
     I count the number of times a character is seen in a sequence.
 
@@ -55,15 +50,15 @@ class ProteinDataHandler(DataHandler.DataHandler):
         logger.flow("Created a protein data handler.")
         super().__init__(filename)
 
-    def covert_sequences_to_count_vector(
+    def covert_to_count_vector(
             self, attributes_values: np.ndarray
     ) -> Processor.Processor:
         """
-        I convert a sequence to a count vector based on attributes given.
+        I convert all sequences to a count vector based on attributes given.
 
         Args:
             attributes_values (numpy.ndarray): List of attributes to use to
-            convert file to.
+                convert file to.
 
         Returns:
             Processor.Processor: A processor object containing processed data.

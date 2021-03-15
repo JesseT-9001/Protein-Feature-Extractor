@@ -1,6 +1,12 @@
-.. automodule:: CustomLogger
+*************
+Custom Logger
+*************
+
+Custom Logger Class
+===================
 .. autoclass:: CustomLogger.CustomLogger
 .. autoattribute:: CustomLogger.CustomLogger::__slots__
+.. automethod:: CustomLogger.CustomLogger::__init__
 
 Custom Logger Properties
 ========================
@@ -9,7 +15,6 @@ Custom Logger Properties
 
 Custom Logger Methods
 =====================
-.. automethod:: CustomLogger.CustomLogger::__init__
 .. automethod:: CustomLogger.CustomLogger::flow
 .. automethod:: CustomLogger.CustomLogger::sanity_check
 

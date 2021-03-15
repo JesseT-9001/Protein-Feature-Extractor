@@ -1,8 +1,3 @@
-"""
-************************************
-Protein Attribute Data Handler Class
-************************************
-"""
 import CustomLogger
 import Handlers.DataHandler as DataHandler
 import numpy as np
@@ -33,14 +28,18 @@ class ProteinAttributeDataHandler(DataHandler.DataHandler):
         columns = self.data.columns
         return np.array([letter for letter in columns if len(letter) == 1])
 
-    def get_attribute_values(self, value) -> tuple:
+    def get_attribute_values(self, value: int) -> tuple:
         """
         I get the attribute name and list of associated values associated with
         the given value - 1.
 
+        Args:
+            value (int): Row number associated with desired attribute.
+
         Returns:
             tuple: Attribute name and attributes
         """
+        logger.sanity_check("value type is " + str(type(value)))
         logger.flow("getting attribute name and values ")
         location = self.data.loc
         return location[value - 1, "Attributes"], location[value - 1, "A":]

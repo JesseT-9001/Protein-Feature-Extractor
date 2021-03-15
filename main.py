@@ -22,7 +22,7 @@ def main():
     p_attributes = ProteinAttributeDataHandler(filename=filename)
 
     attributes_values = p_attributes.get_attribute_headers()
-    pp_data = p_data.covert_sequences_to_count_vector(
+    pp_data = p_data.covert_to_count_vector(
         attributes_values=attributes_values)
 
     pp_data.normalize_via_length()

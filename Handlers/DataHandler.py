@@ -1,9 +1,3 @@
-"""
-******************
-Data Handler Class
-******************
-"""
-
 import CustomLogger
 import pandas as pd
 
@@ -17,7 +11,7 @@ class DataHandler:
 
     Args:
         filename (str): The filename, including the path to read from, used to
-        pull desired data.
+            pull desired data.
     """
 
     #: Reserve space for writable attributes and limits addition attribute
