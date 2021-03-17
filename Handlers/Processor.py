@@ -39,7 +39,7 @@ class Processor:
 
     def apply_attribute(
             self, attribute_name: str, attribute: pd.Series
-    ) -> None:
+    ) -> pd.DataFrame:
         """
         I apply a given attribute series to the data currently held, sum the
         result, and adds it as a new column to the data.
@@ -73,11 +73,17 @@ class Processor:
         # Add attribute as a column on temp dataframe.
         temp[attribute_name] = attribute_applied.sum(axis=1)
 
+        temp[attribute_applied.columns] = attribute_applied.loc[0:, "A":]
+
+
+
+        if "Length" in temp:
+            temp = temp.drop(columns="Length")
         # Add the rest of the old dataframe attributes back in.
-        temp[attribute_applied.columns] = location[0:, "A":]
+        # temp[attribute_applied.columns] = location[0:, "A":]
 
         # Save temp as new dataframe.
-        self.__data = temp
+        return temp
 
     def normalize_via_length(self) -> None:
         """
@@ -102,6 +108,19 @@ class Processor:
         for attribute in headers:
             loc[0:, attribute] = loc[0:, attribute] / length_values
 
+    def normalize_via_min_max(self, column):
+        df = self.__data[0:, "A":]
+        df.subtract(df.min(axis=1), axis=0)\
+            .divide(df.max(axis=1) - df.min(axis=1), axis=0) \
+            .combine_first(df)
+        self.__data[0:, "A":] = df
+
+
+        # apply normalization techniques by Column 1
+        # self.__data[column] = (self.__data[column] - self.__data[
+        #     column].min()) / (self.__data[column].max() - self.__data[
+        #     column].min())
+
     def save_processed_data(self, path: str) -> None:
         """
         I save the data to a given path name.
@@ -117,6 +136,22 @@ class Processor:
 
         # Save dataframe to given path as a csv
         self.__data.to_csv(path)
+
+    def save_given_data(self, data: pd.DataFrame, path: str) -> None:
+        """
+        I save the data to a given path name.
+
+        Args:
+            path (str): The path name to save the data held.
+
+        Returns:
+            NoneType: Nothing
+        """
+        logger.sanity_check("path type is " + str(type(path)))
+        logger.flow(message="Saving processed data")
+
+        # Save dataframe to given path as a csv
+        data.to_csv(path)
 
     def __get_attribute_header(self) -> np.ndarray:
         """

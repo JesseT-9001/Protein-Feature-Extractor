@@ -22,11 +22,19 @@ Welcome to Protein Feature Extractor's documentation!
    :maxdepth: 2
    :caption: The Code:
 
+   the_code/getting_started
+   the_code/main
    the_code/datahandler
    the_code/proteindatahandler
    the_code/proteinattributedatahandler
    the_code/processor
    the_code/customlogger
+
+.. toctree::
+   :maxdepth: 1
+   :caption: The Data:
+
+   chosen_feature.rst
 
 
 Indices and tables
